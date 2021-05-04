@@ -1,0 +1,27 @@
+Architecture Lambda :
+Pour traitement de quantités importantes de données
+mélange/fusionne les traitements par lots et traitements par flux
+utilisé pour obtenir une vue complète des données
+
+Composé de 3 couches :
+-Couche Batch (Btacl Layer)
+	couche du traitement par lots (suite d'opération sans intervention opérateur (script))
+	Master dataset : Stockage de toutes les données brutes,immuables et croissance perpétuelle du nb de données stockées
+		Contenu dans un DataLake
+		Utilisé Hadoop DFS
+		Stockage en format normalisé (avec id pour jointure)
+	Effectue des calculs/analyses sur l'ensemble des données
+		Avec Hadoop ou Spark
+	Doit répondre aux critères de :
+		bonne maintenabilité
+		faible coût
+		passage à l'échelle
+-Couche Service (Serving Layer)
+	stock et expose les résultats des analyses par lot réalisé dans la couche précédante(batch))
+	
+	Apache Druid
+-Couche Temps réel (Speed Layer)
+	couche du traitement par flux
+	Utilisé pour les nouvelles données
+	fourni quasi immédiatement les données les plus récentes
+	Apache Storm,SQLStream,Apache Spark/Flink
